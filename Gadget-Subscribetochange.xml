@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="Subscribe to page / site changes for viewers" height="50" width="250" />
+    <UserPref name="formkey" display_name="Form key" datatype="string" required="true" default_value="eg: dFkzTlRNaHBZLWhxSlQ5V3pkVIMFE6MQ"/>
+    <UserPref name="button" display_name="Button (img url)" datatype="string" required="true" default_value="https://sites.google.com/site/subscribetochangesforviewers/home/bouton_subscribe.gif"/>
+    <UserPref name="confirmation" display_name="Confirmation" datatype="string" required="true" default_value="Thank you. You have successfully subscribed to page / site changes."/>
+    <Content preferred_width="250"></Content>
+    <Content preferred_height="50"></Content>
+    <Content type="html"><![CDATA[
+        <html><body style="background-color:transparent;">
+            <script type="text/javascript">
+
+                var submitted=false;
+                var prefs = new gadgets.Prefs();
+
+                function init(){
+                    document.getElementById("gadget").innerHTML = "<img style=\"cursor: pointer;\"src=\""+prefs.getString("button")+"\" onClick=\"showForm();\"/>";
+                }
+
+                function showThanks(){
+                    document.getElementById("gadget").innerHTML = "<span style=\"font-size: 12px;\">"+prefs.getString("confirmation")+"</span>";
+                }
+
+                function disableBtnOK(){
+                    document.getElementById('form-input').addEventListener("input", function(){
+                        var domOk = document.getElementById('form-ok');
+                        var domInput = document.getElementById('form-input');
+
+                        if (domInput.value != "") {
+                            domOk.removeAttribute('disabled');
+                        }
+                    });
+                }
+
+                function showForm(){
+
+                    var form = "<iframe name=\"hidden_iframe\" id=\"hidden_iframe\" style=\"display:none;\" onload=\"if(submitted){showThanks();}\"></iframe>";
+                    form += "<form action=\"https://docs.google.com/forms/d/"+prefs.getString("formkey")+"/formResponse\" method=\"post\" target=\"hidden_iframe\" onsubmit=\"submitted=true;\">";
+                    form += "<input id=\"form-input\" type=\"text\" name=\"entry.901124617\" placeholder=\"email\" id=\"entry_901124617\">";
+                    form += "<input id=\"form-ok\" type=\"submit\" name=\"submit\" disabled value=\"ok\"></form>";
+                    document.getElementById("gadget").innerHTML = form;
+
+                    disableBtnOK();
+                }
+
+                gadgets.util.registerOnLoadHandler(init);
+
+            </script>
+            <span id="gadget"></span></body></html>
+        ]]>
+  </Content>
+</Module>
