@@ -105,9 +105,12 @@ function sendMessage_(updates, lang, mailType) {
   ////////////////////
   // Batch emails   
   ////////////////////
+  
+  //Line 113 var Sender add your own Google Account - Requires permissions
+  
   for (var j = 0; j < mailing.length; j = j + 40) {
     var bcc = "";
-    var sender = "Patricia Vear";
+    var sender = "Add Google email address";
     for (var k = j; k < j + 40; k++) {
       if (k < mailing.length && mailing[k][1] != "") {
         bcc += mailing[k][1] + ",";
@@ -140,7 +143,9 @@ function createDigest_(page, updates, last_check, when, lang) {
       //Logger.log('AnnouncementsPage');
       var newsfeed = page.getAnnouncements();
       for (var j = 0; j < newsfeed.length; j++) {
-        if (chooseWhen_(newsfeed[j], when) > new Date(last_check).getTime()) {
+        if (chooseWhen_(newsfeed[j], when) > new Date(last_check).
+            
+            ()) {
           var content = HtmlService.createTemplateFromFile('content.html');
           content.TextContent = newsfeed[j].getTextContent().substr(0, 280) + "...";
           content.Title = newsfeed[j].getTitle();
